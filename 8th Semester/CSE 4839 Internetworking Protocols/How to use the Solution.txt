@@ -1,0 +1,5 @@
+For TCP/IP 
+If you find an even numbered problem:
+	check the official solution
+Else:
+	check the chegg solution

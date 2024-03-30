@@ -1,0 +1,150 @@
+<anim ver="netanim-3.108" filetype="animation" >
+<node id="0" sysId="0" locX="5" locY="35" />
+<node id="1" sysId="0" locX="72" locY="73" />
+<node id="2" sysId="0" locX="5" locY="6" />
+<node id="3" sysId="0" locX="3" locY="0" />
+<node id="4" sysId="0" locX="0" locY="98" />
+<nu p="c" t="0" id="0" r="255" g="0" b="0" />
+<nu p="c" t="0" id="1" r="255" g="0" b="0" />
+<nu p="c" t="0" id="2" r="255" g="0" b="0" />
+<nu p="c" t="0" id="3" r="255" g="0" b="0" />
+<nu p="c" t="0" id="4" r="255" g="0" b="0" />
+<link fromId="0" toId="1" fd="10.1.1.1~00:00:00:00:00:01" td="10.1.1.2~00:00:00:00:00:02" ld="" />
+<nonp2plinkproperties id="0" ipAddress="127.0.0.1~00:00:00:00:00:00" channelType="Unknown channel" />
+<nonp2plinkproperties id="1" ipAddress="10.1.2.1~00:00:00:00:00:03" channelType="ns3::CsmaChannel" />
+<nonp2plinkproperties id="1" ipAddress="127.0.0.1~00:00:00:00:00:00" channelType="Unknown channel" />
+<nonp2plinkproperties id="2" ipAddress="10.1.2.2~00:00:00:00:00:04" channelType="ns3::CsmaChannel" />
+<nonp2plinkproperties id="2" ipAddress="127.0.0.1~00:00:00:00:00:00" channelType="Unknown channel" />
+<nonp2plinkproperties id="3" ipAddress="10.1.2.3~00:00:00:00:00:05" channelType="ns3::CsmaChannel" />
+<nonp2plinkproperties id="3" ipAddress="127.0.0.1~00:00:00:00:00:00" channelType="Unknown channel" />
+<nonp2plinkproperties id="4" ipAddress="10.1.2.4~00:00:00:00:00:06" channelType="ns3::CsmaChannel" />
+<nonp2plinkproperties id="4" ipAddress="127.0.0.1~00:00:00:00:00:00" channelType="Unknown channel" />
+<ip n="0" >
+<address >10.1.1.1</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="0" >
+<address >10.1.1.1</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="1" >
+<address >10.1.1.2</address>
+
+<address >10.1.2.1</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="1" >
+<address >10.1.1.2</address>
+
+<address >10.1.2.1</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="1" >
+<address >10.1.1.2</address>
+
+<address >10.1.2.1</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="2" >
+<address >10.1.2.2</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="2" >
+<address >10.1.2.2</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="3" >
+<address >10.1.2.3</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="3" >
+<address >10.1.2.3</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="4" >
+<address >10.1.2.4</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ip n="4" >
+<address >10.1.2.4</address>
+
+<address >127.0.0.1</address>
+
+</ip>
+<ipv6 n="0" >
+<address >::1</address>
+
+</ipv6>
+<ipv6 n="1" >
+<address >::1</address>
+
+</ipv6>
+<ipv6 n="2" >
+<address >::1</address>
+
+</ipv6>
+<ipv6 n="3" >
+<address >::1</address>
+
+</ipv6>
+<ipv6 n="4" >
+<address >::1</address>
+
+</ipv6>
+<nu p="s" t="0" id="0" w="1" h="1" />
+<nu p="s" t="0" id="1" w="1" h="1" />
+<nu p="s" t="0" id="2" w="1" h="1" />
+<nu p="s" t="0" id="3" w="1" h="1" />
+<nu p="s" t="0" id="4" w="1" h="1" />
+<ncs ncId="0" n="RemainingEnergy" t="DOUBLE" />
+<p fId="0" fbTx="2" lbTx="2.0016864" tId="1" fbRx="2.002" lbRx="2.0036864" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="2" fbRx="2.01169808" lbRx="0" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="2" fbRx="2.01169808" lbRx="0" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="3" fbRx="2.01169808" lbRx="0" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="3" fbRx="2.01169808" lbRx="0" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="4" fbRx="2.01169808" lbRx="0" />
+<p fId="1" fbTx="2.0116864" lbTx="2.01169152" tId="4" fbRx="2.01169808" lbRx="0" />
+<p fId="4" fbTx="2.01169908" lbTx="2.0117042" tId="1" fbRx="2.01171076" lbRx="0" />
+<p fId="4" fbTx="2.01169908" lbTx="2.0117042" tId="1" fbRx="2.01171076" lbRx="0" />
+<p fId="4" fbTx="2.01169908" lbTx="2.0117042" tId="2" fbRx="2.01171076" lbRx="0" />
+<p fId="4" fbTx="2.01169908" lbTx="2.0117042" tId="3" fbRx="2.01171076" lbRx="0" />
+<p fId="1" fbTx="2.01171176" lbTx="2.01179736" tId="2" fbRx="2.01180392" lbRx="0" />
+<p fId="1" fbTx="2.01171176" lbTx="2.01179736" tId="3" fbRx="2.01180392" lbRx="0" />
+<p fId="1" fbTx="2.01171176" lbTx="2.01179736" tId="4" fbRx="2.01180392" lbRx="0" />
+<p fId="1" fbTx="2.01171176" lbTx="2.01179736" tId="4" fbRx="2.01180392" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="1" fbRx="2.0178156" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="1" fbRx="2.0178156" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="2" fbRx="2.0178156" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="2" fbRx="2.0178156" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="3" fbRx="2.0178156" lbRx="0" />
+<p fId="4" fbTx="2.01780392" lbTx="2.01780904" tId="3" fbRx="2.0178156" lbRx="0" />
+<p fId="1" fbTx="2.0178166" lbTx="2.01782172" tId="2" fbRx="2.01782828" lbRx="0" />
+<p fId="1" fbTx="2.0178166" lbTx="2.01782172" tId="3" fbRx="2.01782828" lbRx="0" />
+<p fId="1" fbTx="2.0178166" lbTx="2.01782172" tId="4" fbRx="2.01782828" lbRx="0" />
+<p fId="1" fbTx="2.0178166" lbTx="2.01782172" tId="4" fbRx="2.01782828" lbRx="0" />
+<p fId="4" fbTx="2.01782928" lbTx="2.01791488" tId="1" fbRx="2.01792144" lbRx="0" />
+<p fId="4" fbTx="2.01782928" lbTx="2.01791488" tId="1" fbRx="2.01792144" lbRx="0" />
+<p fId="1" fbTx="2.01792144" lbTx="2.01960784" tId="0" fbRx="2.01992144" lbRx="2.02160784" />
+<p fId="4" fbTx="2.01782928" lbTx="2.01791488" tId="2" fbRx="2.01792144" lbRx="0" />
+<p fId="4" fbTx="2.01782928" lbTx="2.01791488" tId="3" fbRx="2.01792144" lbRx="0" />
+</anim>

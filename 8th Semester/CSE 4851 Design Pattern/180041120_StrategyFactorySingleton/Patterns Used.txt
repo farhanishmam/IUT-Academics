@@ -1,0 +1,1 @@
+I have used Strategy, Singleton, and Factory Pattern in this code

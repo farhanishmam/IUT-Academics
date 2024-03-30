@@ -1,0 +1,102 @@
+#include "ns3/applications-module.h"
+#include "ns3/core-module.h"
+#include "ns3/csma-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/network-module.h"
+
+#include <fstream>
+#include <iostream>
+
+using namespace ns3;
+
+NS_LOG_COMPONENT_DEFINE("CsmaMulticastExample");
+
+int
+main(int argc, char* argv[])
+{   
+    Config::SetDefault("ns3::CsmaNetDevice::EncapsulationMode", StringValue("Dix"));
+    CommandLine cmd(__FILE__);
+    cmd.Parse(argc, argv);
+    NS_LOG_INFO("Create nodes.");
+    
+    NodeContainer c;
+    c.Create(5);
+    
+    NodeContainer c0 = NodeContainer(c.Get(0), c.Get(1), c.Get(2));
+    NodeContainer c1 = NodeContainer(c.Get(2), c.Get(3), c.Get(4));
+
+    NS_LOG_INFO("Build Topology.");
+    CsmaHelper csma;
+    csma.SetChannelAttribute("DataRate", DataRateValue(DataRate(5000000)));
+    csma.SetChannelAttribute("Delay", TimeValue(MilliSeconds(2)));
+
+    NetDeviceContainer nd0 = csma.Install(c0); 
+    NetDeviceContainer nd1 = csma.Install(c1); 
+
+    NS_LOG_INFO("Add IP Stack.");
+    InternetStackHelper internet;
+    internet.Install(c);
+
+    NS_LOG_INFO("Assign IP Addresses.");
+    Ipv4AddressHelper ipv4Addr;
+    ipv4Addr.SetBase("10.1.1.0", "255.255.255.0");
+    ipv4Addr.Assign(nd0);
+    ipv4Addr.SetBase("10.1.2.0", "255.255.255.0");
+    ipv4Addr.Assign(nd1);
+
+    NS_LOG_INFO("Configure multicasting.");
+ 
+    Ipv4Address multicastSource("10.1.1.1");
+    Ipv4Address multicastGroup("225.1.2.4");
+
+    Ipv4StaticRoutingHelper multicast;
+
+    // 1) Configure a (static) multicast route on node n2 (multicastRouter)
+    Ptr<Node> multicastRouter = c.Get(2); 
+    Ptr<NetDevice> inputIf = nd0.Get(2);  
+    NetDeviceContainer outputDevices;    
+    outputDevices.Add(nd1.Get(0));      
+
+    multicast.AddMulticastRoute(multicastRouter,
+                                multicastSource,
+                                multicastGroup,
+                                inputIf,
+                                outputDevices);
+
+    Ptr<Node> sender = c.Get(0);
+    Ptr<NetDevice> senderIf = nd0.Get(0);
+    multicast.SetDefaultMulticastRoute(sender, senderIf);  
+    NS_LOG_INFO("Create Applications.");
+
+    uint16_t multicastPort = 9; // Discard port (RFC 863)
+
+    OnOffHelper onoff("ns3::UdpSocketFactory",
+                      Address(InetSocketAddress(multicastGroup, multicastPort)));
+    onoff.SetConstantRate(DataRate("255b/s"));
+    onoff.SetAttribute("PacketSize", UintegerValue(128));
+
+    ApplicationContainer srcC = onoff.Install(c0.Get(0));
+
+    srcC.Start(Seconds(1.));
+    srcC.Stop(Seconds(10.));
+
+    PacketSinkHelper sink("ns3::UdpSocketFactory",
+                          InetSocketAddress(Ipv4Address::GetAny(), multicastPort));
+
+    ApplicationContainer sinkC = sink.Install(c1.Get(2)); // Node n4
+    
+    sinkC.Start(Seconds(1.0));
+    sinkC.Stop(Seconds(10.0));
+
+    NS_LOG_INFO("Configure Tracing.");
+  
+    AsciiTraceHelper ascii;
+    csma.EnableAsciiAll(ascii.CreateFileStream("csma-multicast.tr"));
+
+    csma.EnablePcapAll("csma-multicast", false);
+
+    NS_LOG_INFO("Run Simulation.");
+    Simulator::Run();
+    Simulator::Destroy();
+    NS_LOG_INFO("Done.");
+}

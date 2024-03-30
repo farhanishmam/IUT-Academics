@@ -1,0 +1,116 @@
+// Define the interface for the strategy pattern
+interface FlyBehavior {
+    void fly();
+}
+
+interface QuackBehavior {
+    void quack();
+}
+
+// Define the concrete classes for the strategy pattern
+class FlyWithWings implements FlyBehavior {
+    public void fly() {
+        System.out.println("I'm flying with wings");
+    }
+}
+
+class FlyNoWay implements FlyBehavior {
+    public void fly() {
+        System.out.println("I can't fly");
+    }
+}
+
+class Quack implements QuackBehavior {
+    public void quack() {
+        System.out.println("Quack");
+    }
+}
+
+class MuteQuack implements QuackBehavior {
+    public void quack() {
+        System.out.println("<< Silence >>");
+    }
+}
+
+// Define the Duck abstract class for the factory pattern
+abstract class Duck {
+    protected FlyBehavior flyBehavior;
+    protected QuackBehavior quackBehavior;
+
+    public Duck() {}
+
+    public abstract void display();
+
+    public void performFly() {
+        flyBehavior.fly();
+    }
+
+    public void performQuack() {
+        quackBehavior.quack();
+    }
+
+    public void swim() {
+        System.out.println("All ducks float, even decoys!");
+    }
+
+    public void setFlyBehavior(FlyBehavior fb) {
+        flyBehavior = fb;
+    }
+
+    public void setQuackBehavior(QuackBehavior qb) {
+        quackBehavior = qb;
+    }
+}
+
+// Define the concrete classes for the factory pattern
+class MallardDuck extends Duck {
+    public MallardDuck() {
+        flyBehavior = new FlyWithWings();
+        quackBehavior = new Quack();
+    }
+
+    public void display() {
+        System.out.println("I'm a real Mallard duck");
+    }
+}
+
+class ModelDuck extends Duck {
+    public ModelDuck() {
+        flyBehavior = new FlyNoWay();
+        quackBehavior = new Quack();
+    }
+
+    public void display() {
+        System.out.println("I'm a model duck");
+    }
+}
+
+// Define the factory for the factory pattern
+class DuckFactory {
+    public static Duck create(String type) {
+        if (type.equals("mallard")) {
+            return new MallardDuck();
+        } else if (type.equals("model")) {
+            return new ModelDuck();
+        } else {
+            throw new IllegalArgumentException("Invalid duck type: " + type);
+        }
+    }
+}
+
+// Use the strategy and factory patterns together
+public class Main {
+    public static void main(String[] args) {
+        Duck mallardDuck = DuckFactory.create("mallard");
+        mallardDuck.display();
+        mallardDuck.performQuack();
+        mallardDuck.performFly();
+
+        Duck modelDuck = DuckFactory.create("model");
+        modelDuck.display();
+        modelDuck.performQuack();
+        modelDuck.performFly();
+        modelDuck.setFlyBehavior(new FlyWithWings());
+        modelDuck.performFly();
+    }
+}

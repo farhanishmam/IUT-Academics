@@ -1,0 +1,3 @@
+We have a company that employs different types of employees such as managers, programmers, and interns. The company wants to calculate the total salary of all the employees.
+
+To solve this problem, we can use the Visitor pattern where we define a visitor interface with different methods to calculate the salary for different types of employees. Each employee class implements an accept method that accepts the visitor and calls the appropriate method on the visitor. The visitor pattern allows us to add new types of employees and salary calculation methods without modifying the existing classes.

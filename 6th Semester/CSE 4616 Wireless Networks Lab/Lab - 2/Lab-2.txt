@@ -1,0 +1,106 @@
+Router-0
+
+int e0/0
+ip add 172.20.20.1 255.255.255.0
+no shut
+
+int s0/0
+ip add 200.200.20.2 255.255.255.252
+no shut
+
+Router-1
+
+int e0/0
+ip add 10.10.20.1 255.255.255.0
+no shut
+
+int s0/0
+ip add 200.200.20.6 255.255.255.252
+no shut
+
+Router-2
+
+int e0/0
+ip add 192.168.20.1 255.255.255.0
+no shut
+
+int s0/0
+ip add 200.200.20.10 255.255.255.252
+no shut
+
+Core Router
+
+int s0/0
+ip add 200.200.20.1 255.255.255.252
+no shut
+
+int s0/1
+ip add 200.200.20.5 255.255.255.252
+no shut
+
+int s0/2
+ip add 200.200.20.9 255.255.255.252
+no shut
+
+PC-1
+
+ip 172.20.20.4 255.255.255.0 172.20.20.1
+
+PC-2
+
+ip 172.20.20.5 255.255.255.0 172.20.20.1
+
+PC-3
+
+ip 10.10.20.4 255.255.255.0 10.10.20.1
+
+PC-4
+
+ip 10.10.20.5 255.255.255.0 10.10.20.1
+
+PC-5
+
+ip 192.168.20.4 255.255.255.0 192.168.20.1
+
+PC-6
+
+ip 192.168.20.5 255.255.255.0 192.168.20.1
+
+RIP
+
+router rip
+version 2
+network 172.20.20.0
+network 200.200.20.0
+end
+
+Static
+
+ip route 172.20.20.0 255.255.255.0 200.200.20.5
+ip route 192.168.20.0 255.255.255.0 200.200.20.5
+
+OSPF
+
+router ospf 1
+network 192.168.20.0 0.0.0.255 area 0
+network 200.200.20.8 0.0.0.3 area 0
+end
+
+Core Router
+
+router rip
+version 2
+network 200.200.20.0
+
+ip route 10.10.20.0 255.255.255.0 200.200.20.6
+
+router ospf 1
+network 200.200.20.8 0.0.0.3 area 0
+
+router ospf 1
+redistribute rip metric 200 subnets
+redistribute static metric 200 subnets
+
+router rip
+redistribute ospf 1 metric 10 match internal external 1 external 2
+redistribute static metric 10
