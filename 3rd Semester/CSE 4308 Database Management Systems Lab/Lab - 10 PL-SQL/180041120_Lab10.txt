@@ -1,0 +1,106 @@
+													SET SERVEROUTPUT ON;
+
+---Task 1
+
+CREATE OR REPLACE FUNCTION total_items_shipped(year_input IN INT)
+RETURN INT
+IS
+	total_items INT:=0;
+BEGIN
+	SELECT SUM(QUANTITY)
+	INTO total_items
+	FROM ORDERS,ORDER_ITEMS
+	WHERE ORDERS.ORDER_ID = ORDER_ITEMS.ORDER_ID AND ORDER_YEAR = year_input AND STATUS = 1;
+	RETURN total_items;
+END;
+/
+
+BEGIN
+	DBMS_OUTPUT.PUT_LINE('Output: 2002 -'||total_items_shipped(2002)||', 2006 -'||total_items_shipped(2006)||', 2017 -'||total_items_shipped(2017));
+END;
+/
+
+--Task 2
+CREATE OR REPLACE FUNCTION most_sold_item (year_input IN INT )
+RETURN NUMBER
+IS
+	most_sold_ID INT := 0;
+BEGIN
+	SELECT ITEM_ID
+	INTO most_sold_ID
+	FROM (
+		SELECT ITEM_ID, SUM(QUANTITY)
+		FROM ORDERS, ORDER_ITEMS
+		WHERE ORDERS.ORDER_ID = ORDER_ITEMS.ORDER_ID AND ORDER_YEAR = year_input
+		GROUP BY ITEM_ID
+		HAVING COUNT(ORDER_ITEMS.ITEM_ID)=
+		(
+			SELECT MAX(COUNT(ORDER_ITEMS.ITEM_ID))
+			FROM ORDERS,ORDER_ITEMS
+			WHERE ORDERS.STATUS = 1 AND ORDER_YEAR = year_input AND
+			ORDERS.ORDER_ID = ORDER_ITEMS.ORDER_ID
+			GROUP BY ITEM_ID
+		)
+	);
+	RETURN most_sold_ID;
+END;
+/
+--For some reason doing all three functions together shows error
+BEGIN
+	DBMS_OUTPUT.PUT_LINE('Output: 2002 - ' || most_sold_item(2002));
+END;
+/
+BEGIN
+	DBMS_OUTPUT.PUT_LINE(', 2006 - ' || most_sold_item(2006));
+END;
+/
+BEGIN
+	DBMS_OUTPUT.PUT_LINE(', 2017 - ' || most_sold_item(2017));
+END;
+/
+
+--TASK 3
+
+CREATE OR REPLACE FUNCTION profit_estimination(year_input IN INT)
+RETURN VARCHAR2
+IS
+	revenue_percentage NUMBER(5,2);
+	generated_revenue INT := 0;
+	lost_revenue INT := 0;	
+	output_message VARCHAR2(20);
+BEGIN
+	--calcuate generated revenue 
+	SELECT SUM(QUANTITY * PPU)
+	INTO generated_revenue
+	FROM ORDERS, ORDER_ITEMS
+	WHERE ORDERS.ORDER_ID = ORDER_ITEMS.ORDER_ID AND ORDER_YEAR = year_input AND STATUS = 1; --1 for shipped order
+	--calcuate lost revenue 
+	SELECT SUM(QUANTITY * PPU)
+	INTO lost_revenue
+	FROM ORDERS, ORDER_ITEMS
+	WHERE ORDERS.ORDER_ID = ORDER_ITEMS.ORDER_ID AND ORDER_YEAR = year_input AND STATUS = 0; --0 for not shipped order
+	--calcuate revenue percentage
+	revenue_percentage:=(generated_revenue/(generated_revenue+lost_revenue))*100;
+	
+	IF revenue_percentage >= 50 AND revenue_percentage <= 65 
+	THEN 
+		output_message := CONCAT(generated_revenue, ' (Average Year)');
+	ELSIF revenue_percentage>=66 AND revenue_percentage<=79 
+	THEN
+		output_message := CONCAT(generated_revenue, ' (Good Year)');
+
+	ELSIF revenue_percentage>=79 THEN
+		output_message := CONCAT(generated_revenue, ' (Excellent Year)');
+
+	ELSE
+		output_message := CONCAT(generated_revenue, ' (A year of losses)');
+	END IF;
+	RETURN output_message;
+END;
+/
+
+BEGIN
+	DBMS_OUTPUT.PUT_LINE('Output: 2002 -' || profit_estimination(2002)||', 2006 -'|| profit_estimination(2006)||', 2017 -'||profit_estimination(2017));
+END;
+/
+

@@ -1,0 +1,3 @@
+Does the pivot get swapped in your implementation? 
+
+As we can see the elements are swapped when the boundary limit is crossed. The boundary limit gets gets crossed only when the whole array is traversed. So, in pivot either becomes the start or ending point, and would hence get swapped.

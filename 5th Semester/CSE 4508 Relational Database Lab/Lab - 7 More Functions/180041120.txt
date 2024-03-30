@@ -1,0 +1,138 @@
+CREATE TABLE AccountProperties(
+    ID INT,
+    name VARCHAR2(30),
+    iRate NUMBER,
+    cp INT,
+    CONSTRAINT account_properties_pk PRIMARY KEY(ID)
+);
+
+CREATE TABLE Accounts(
+    ID INT,
+    name VARCHAR2(40),
+    accCode INT,
+    balance NUMBER,
+    lastDateInterest DATE,
+    CONSTRAINT accounts_pk PRIMARY KEY(ID),
+    CONSTRAINT acc_accProperties_fk FOREIGN KEY (accCode) REFERENCES AccountProperties
+);
+
+INSERT INTO AccountProperties VALUES(101, 'daily', 7, 1);
+INSERT INTO AccountProperties VALUES(102, 'monthly', 8, 2);
+INSERT INTO AccountProperties VALUES(103, 'quaterly', 9, 3);
+INSERT INTO AccountProperties VALUES(104, 'halfyearly', 10, 4);
+INSERT INTO AccountProperties VALUES(105, 'yearly', 11, 5);
+
+INSERT INTO Accounts VALUES(1, 'Sinister', 101, 100000, TO_DATE('30-DEC-18','dd-mon-yy'));
+INSERT INTO Accounts VALUES(2, 'Dante', 102, 50000, TO_DATE('30-JAN-20','dd-mon-yy'));
+INSERT INTO Accounts VALUES(3, 'RxJax', 103, 80000, TO_DATE('30-DEC-19','dd-mon-yy'));
+INSERT INTO Accounts VALUES(4, 'Badrev', 104, 150000, TO_DATE('01-JUN-20','dd-mon-yy'));
+INSERT INTO Accounts VALUES(5, 'Rafat', 105, 130000, TO_DATE('21-DEC-18','dd-mon-yy'));
+
+--Task-A
+INSERT INTO Accounts VALUES(6, 'Farhan', 103, 190000, TO_DATE('31-DEC-18','dd-mon-yy'));
+INSERT INTO Accounts VALUES(7, 'Ishmam', 101, 57500, TO_DATE('20-JAN-20','dd-mon-yy'));
+INSERT INTO Accounts VALUES(8, 'Tauseef', 102, 10000, TO_DATE('10-DEC-19','dd-mon-yy'));
+INSERT INTO Accounts VALUES(9, 'Ferdous', 104, 190000, TO_DATE('30-JUN-20','dd-mon-yy'));
+INSERT INTO Accounts VALUES(10, 'Tashdeed', 105, 530000, TO_DATE('01-DEC-18','dd-mon-yy'));
+
+--Task-B
+CREATE OR REPLACE FUNCTION total_profit(accID INT)
+RETURN NUMBER
+IS
+    acc_cp INT;
+    intRate NUMBER;
+    lastDate DATE;
+    dayDiff INT;
+    accBalance NUMBER;
+    profit NUMBER:=0;
+BEGIN
+    SELECT
+         AccountProperties.CP into acc_cp
+    FROM
+         AccountProperties, Accounts
+    WHERE
+         AccountProperties.ID = Accounts.accCode AND Accounts.ID = accID;
+
+    SELECT
+         AccountProperties.iRate into intRate
+    FROM
+         AccountProperties, Accounts
+    WHERE
+         AccountProperties.ID =Accounts.accCode and Accounts.ID = accID;
+
+    SELECT
+           lastDateInterest INTO lastDate
+    FROM
+         Accounts
+    WHERE
+          Accounts.ID = accID;
+
+    SELECT
+         balance INTO accBalance
+    FROM
+         Accounts
+    WHERE
+          Accounts.ID = accID;
+
+    SELECT sysdate-TO_DATE(lastDate,'dd-mon-yy') into dayDiff FROM dual;
+    intRate := intRate/100;
+
+    IF acc_cp = 1 THEN
+        intRate := intRate/365; --daily interest rate
+    ELSIF acc_cp = 2 THEN
+        intRate := intRate/12; --monthly interest rate
+        dayDiff := dayDiff/30;
+    ELSIF acc_cp = 3 THEN
+        intRate := intRate/12; --quarterly interest rate
+        dayDiff := dayDiff/90;
+    ELSIF acc_cp = 4 THEN
+        intRate := intRate/12; --half-yearly interest rate
+        dayDiff := dayDiff/182;
+    ELSIF acc_cp =5 THEN
+                                --by default it is yearly interest rate
+        dayDiff := dayDiff/365;
+    END IF;
+
+    profit := accBalance*power(1 + intRate, dayDiff) - accBalance;
+    RETURN floor(profit);
+END;
+/
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(total_profit(1));
+END;
+/
+
+--Task-C
+CREATE OR REPLACE PROCEDURE update_balance
+IS
+    CURSOR cur IS
+        SELECT
+               ID, balance
+        FROM
+             Accounts;
+    accID INT;
+    accBalance NUMBER;
+BEGIN
+    OPEN cur;
+    LOOP
+        FETCH cur INTO accID, accBalance;
+        EXIT WHEN cur%NOTFOUND;
+        accBalance := accBalance + total_profit(accID);
+        UPDATE
+            Accounts
+        SET
+            BALANCE = accBalance,
+            LASTDATEINTEREST = (SELECT sysdate FROM dual)
+        WHERE
+              Accounts.ID = accID;
+    END LOOP;
+END;
+/
+
+BEGIN
+    update_balance();
+END;
+
+
+SELECT *FROM Accounts;

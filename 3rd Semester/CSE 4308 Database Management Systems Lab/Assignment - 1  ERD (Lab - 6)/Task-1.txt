@@ -1,0 +1,71 @@
+Create Table School
+(
+	School_ID INT,
+	Name Varchar(30),
+	Primary Key (School_ID)
+);
+
+Create Table Dept
+(
+	Name Varchar(10),
+	Building Varchar(10),
+	School_ID INT,
+	Primary Key (Name),
+	Foreign Key (School_ID) References School
+);
+
+Create Table Instructor
+(
+	Instructor_ID INT,
+	Name Varchar(10),
+	Department Varchar(10),
+	Primary Key (Instructor_ID),
+	Foreign Key(Department)References Dept
+);
+
+Create Table Courses
+(
+	Course_ID INT,
+	Name Varchar(10),
+	Credit Numeric(3,2),
+	Primary key(Course_ID)
+);
+
+Create Table Student
+(
+	Student_ID INT,
+	Name Varchar(30),
+	Age INT,
+	Department Varchar(10),
+	Primary Key(Student_ID),
+	Foreign Key(Department) References Dept
+);
+
+Create Table Dept_Offer_Course
+(
+	Course_ID INT,
+	Department Varchar(10),
+	Primary Key(Course_ID,Department),
+	Foreign Key(Course_ID)References Courses,
+	Foreign Key(Department)References Dept
+);
+
+Create Table Inst_Teaches_Course
+(
+	Instructor_ID INT,
+	Course_ID INT,
+	Primary Key(Course_ID,Instructor_ID),
+	Foreign Key(Course_ID)References Courses,
+	Foreign Key(Instructor_ID)References Instructor
+);
+
+Create Table Student_Takes_Courses
+(
+	Course_ID INT,
+	Student_ID INT,
+	Primary Key(Course_ID,Student_ID),
+	Foreign Key(Course_ID)References Courses,
+	Foreign Key(Student_ID)References Student
+);
+
+

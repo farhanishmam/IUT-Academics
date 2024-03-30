@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/IUT/Programming/C++ programs/untitled16/Rectangle.h
+iostream
+-
+math.h
+-
+
+E:/IUT/Programming/C++ programs/untitled16/main.cpp
+iostream
+-
+Rectangle.h
+E:/IUT/Programming/C++ programs/untitled16/Rectangle.h
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="exitGrid" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFX_180041120.JavaFX_180041120Controller">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <AnchorPane fx:id="exitPane" prefHeight="184.0" prefWidth="253.0" stylesheets="@JavaFX_180041120.css">
+         <children>
+            <Label fx:id="confirmLabel" layoutX="56.0" layoutY="42.0" prefHeight="35.0" prefWidth="132.0" text="Confirm Exit" />
+            <Button fx:id="yesButton" layoutX="56.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleYes" prefHeight="26.0" prefWidth="56.0" text="Yes" />
+            <Button fx:id="noButton" layoutX="143.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleNo" prefHeight="26.0" prefWidth="56.0" text="No" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

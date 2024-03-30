@@ -1,0 +1,18 @@
+System Analysis Report:
+-Problem Definition
+   Problem Statement
+   Issue Weights
+   Objective
+-Feasibility Analysis ( Technical, Economical, Operational )
+- Flow Chart of currently used system
+-Constraints
+
+-Next Week Submission
+System Analysis Report:
+-Problem Definition
+   Problem Statement
+   Issue Weights
+   Requirement
+   Constraint
+-Feasibility Analysis ( Technical, Economical, Operational )
+- Flow Chart of currently used system

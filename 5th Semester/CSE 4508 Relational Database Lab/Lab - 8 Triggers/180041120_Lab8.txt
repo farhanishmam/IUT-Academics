@@ -1,0 +1,87 @@
+--Task A
+DROP TABLE employee;
+CREATE TABLE employee(
+    ID VARCHAR2(10),
+    emp_name VARCHAR2(30),
+    address VARCHAR2(100),
+    age INT,
+    CONSTRAINT employee_pk PRIMARY KEY(ID)
+);
+
+INSERT INTO
+    employee
+VALUES('180041120', 'Farhan', 'Dhaka', 20);
+
+CREATE OR REPLACE TRIGGER upd_emp
+	AFTER UPDATE
+    ON employee FOR EACH ROW
+
+	BEGIN
+        dbms_output.put_line('The old values of the updated row is: ');
+        dbms_output.put_line('ID: '||:OLD.ID || ', Name: '||:OLD.emp_name || ', Address: '||:OLD.address || ', Age: '||:OLD.age);
+
+        dbms_output.put_line('The new values of the updated row is: ');
+        dbms_output.put_line('ID: '||:NEW.ID || ', Name: '||:NEW.emp_name || ', Address: '||:NEW.address || ', Age: '||:NEW.age);
+	END;
+/
+
+UPDATE
+    employee
+SET
+    emp_name = 'Ishmam', age = 21
+WHERE
+      ID = '180041120';
+
+--Task B
+DROP TABLE students;
+CREATE TABLE students(
+    ID VARCHAR2(9),
+    DateOfAdm DATE,
+    dept VARCHAR2(1),
+    prog VARCHAR2(1),
+    sec VARCHAR2(1)
+);
+
+CREATE OR REPLACE FUNCTION gen_ID (date_adm IN DATE, dept IN VARCHAR2, prog IN VARCHAR2, sec IN VARCHAR2)
+    RETURN VARCHAR2
+IS
+    out_id VARCHAR2(9);
+    std_count INT;
+    id_xxx VARCHAR2(3);
+    BEGIN
+        SELECT COUNT(*) INTO std_count FROM students;
+        std_count:= std_count+1;
+
+        IF std_count < 10 THEN
+            SELECT '00' || TO_CHAR(std_count) INTO id_xxx FROM DUAL;
+        ELSIF std_count < 100 THEN
+            SELECT '0' || TO_CHAR(std_count) INTO id_xxx FROM DUAL;
+        ELSIF std_count < 1000 THEN
+            SELECT TO_CHAR(std_count) INTO id_xxx FROM DUAL;
+        END IF;
+
+        SELECT
+            SUBSTR(TO_CHAR(date_adm,'YYYYDDMM'),3 ,2) || dept || prog || sec || id_xxx
+        INTO
+            out_id
+        FROM
+             dual;
+
+        RETURN out_id;
+    END;
+/
+
+CREATE OR REPLACE TRIGGER stdId_trig
+    BEFORE INSERT
+    ON students FOR EACH ROW
+	BEGIN
+     IF :new.id IS NULL THEN
+         :new.id := gen_ID(:new.DateOfAdm, :new.dept, :new.prog, :new.sec);
+     END IF;
+	END;
+/
+
+INSERT INTO students VALUES('','22-JAN-2018', '1','1','1');
+INSERT INTO students VALUES('','22-JAN-2019', '4','1','3');
+SELECT *FROM students;
+

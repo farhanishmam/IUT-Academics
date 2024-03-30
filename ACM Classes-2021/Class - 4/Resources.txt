@@ -1,0 +1,19 @@
+Recursion
+
+	http://zobayer.blogspot.com/2009/12/cse-102-practice-recursions.html
+
+Prefix Sum
+
+	https://www.youtube.com/watch?v=pVS3yhlzrlQ
+
+GCD & LCM
+
+	https://www.geeksforgeeks.org/euclidean-algorithms-basic-and-extended
+
+Binary Search
+
+	https://www.geeksforgeeks.org/binary-search/
+
+Binary Search Visualization
+
+	https://www.cs.usfca.edu/~galles/visualization/Search.html

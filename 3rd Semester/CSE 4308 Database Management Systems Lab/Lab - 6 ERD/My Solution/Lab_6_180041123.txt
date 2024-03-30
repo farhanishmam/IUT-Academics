@@ -1,0 +1,139 @@
+Task 1:
+
+Create Table Dept
+(
+D_name Varchar(10),
+Building Varchar(10),
+Primary Key (D_name)
+);
+Create Table Instructor
+(
+I_ID INT,
+Name Varchar(10),
+D_name Varchar(10),
+Primary Key (I_ID),
+Foreign Key(D_name)references Dept
+);
+Create Table Courses
+(
+C_ID INT,
+Name Varchar(10),
+Credit Numeric(3,2),
+Primary key(C_ID)
+);
+Create Table Relation_Instructor_Courses
+(
+I_ID INT,
+C_ID INT,
+Primary Key(C_ID,I_ID),
+Foreign Key(C_ID)references Courses,
+Foreign Key(I_ID)references Instructor
+);
+Create Table Student
+(
+S_ID INT,
+D_name Varchar(10),
+Name Varchar(10),
+Primary Key(S_ID),
+Foreign Key(D_name) references Dept
+);
+Create Table Relation_Student_Courses
+(
+C_ID INT,
+S_ID INT,
+Primary Key(C_ID,S_ID),
+Foreign Key(C_ID)references Courses,
+Foreign Key(S_ID)References Student
+);
+Create Table Relation_Courses_Dept
+(
+C_ID INT,
+D_name Varchar(10),
+Primary Key(C_ID,D_name),
+Foreign Key(C_ID)references Courses,
+Foreign Key(D_name)references Dept
+);
+
+Task 2:
+
+Create Table Employee
+(
+E_ID INT,
+Name Varchar(10),
+Phone Varchar(10),
+Primary Key(E_ID)
+);
+Create Table Customer
+(
+C_ID INT,
+Name Varchar(10),
+Age INT,
+Primary Key(C_ID),
+Foreign Key(E_ID)references Employee
+);
+Create Table Products
+(
+P_ID INT,
+Name Varchar(10),
+Price INT,
+Primary Key(P_ID)
+);
+Create Table Relation_Product_Customer
+(
+C_ID INT,
+P_ID INT,
+Primary Key(C_ID,P_ID),
+Foreign Key(C_ID)references Customer,
+Foreign Key(P_ID)references Product
+);
+
+Task 3:
+
+Create Table Division
+(
+Div_id INT,
+Name Varchar(10),
+Primary Key(Div_id)
+);
+Create Table District
+(
+Dis_id INT,
+Div_id INT,
+Name Varchar(10),
+Primary Key(Dis_id);
+Foreign Key(Div_id)references Division
+);
+Create Table Profession
+(
+Prof_id INT,
+Name Varchar(10),
+Qualification Varchar(10),
+Salary INT,
+Primary Key(Prof_id)
+);
+Create Table Citizen
+(
+C_ID INT,
+C_Name Varchar(10),
+DOB Date,
+Blood_g Varchar(10),
+Div_id INT,
+Prof_id INT,
+Primary Key(C_ID),
+Foreign Key(Div_id)references Division,
+Foreign Key(Prof_id)references Profession
+);
+
+1.
+Blood_g,count(C_ID)
+from citizen
+group by Blood_g;
+2.
+Prof_id,Name,Salary,count(C_ID)
+from citizen natural join profession
+group by Prof_id,Name,Salary;
+3.
+Prof_id,Name,count(C_ID)
+from citizen natural join profession
+group by Prof_id,Name
+order by count(ID) desc limit 3;

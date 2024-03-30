@@ -1,0 +1,14 @@
+-- Task - 1
+
+SELECT dept_name, first_name, last_name, salary FROM employee AS e1, dept AS d
+WHERE d.dept_id = e1.dept_id AND
+(
+SELECT count(*) FROM employee e2 
+WHERE e1.salary<e2.salary
+AND e1.dept_id = e2.dept_id
+) <3;
+
+-- Task - 2
+
+SELECT name AS winning_candidate FROM
+(SELECT name, count(*) as count FROM candidate, vote WHERE vote.candidate_id = candidate.candidate_id GROUP BY name ORDER BY count(*) DESC) WHERE ROWNUM = 1;

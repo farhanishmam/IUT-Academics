@@ -1,0 +1,97 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/home/kurogami/Documents/VHDL/1 to 8 DEMUX
+Ealu_4bit
+Z0 w1611317624
+Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 2
+Z4 d/home/kurogami/Documents/VHDL/4-bit ALU
+Z5 8/home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd
+Z6 F/home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd
+l0
+L5 1
+Vi?Z0Hgb1L9dhLJ[32VZbc0
+!s100 Qg8]eCe=P0JUIh7ba;n1J3
+Z7 OV;C;2020.1;71
+32
+Z8 !s110 1611317625
+!i10b 1
+Z9 !s108 1611317625.000000
+Z10 !s90 -reportprogress|300|-work|4bit_ALU|-2002|-explicit|-stats=none|/home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd|
+Z11 !s107 /home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd|
+!i113 1
+Z12 o-work 4bit_ALU -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+R3
+DEx4 work 8 alu_4bit 0 22 i?Z0Hgb1L9dhLJ[32VZbc0
+!i122 2
+l14
+L13 14
+VIGdZ7V2`mDndSJHh;d^K_0
+!s100 G5VYed<^Idkib56RR7e3^3
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Etb_alu_4bit
+Z14 w1611318142
+R1
+R2
+R3
+!i122 5
+R4
+Z15 8/home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd
+Z16 F/home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd
+l0
+L5 1
+VOg;g3kK>YV11HoCM;h1AT1
+!s100 DIccK]_ULY`;W>7I5_<Sh1
+R7
+32
+Z17 !s110 1611318143
+!i10b 1
+Z18 !s108 1611318143.000000
+Z19 !s90 -reportprogress|300|-work|4bit_ALU|-2002|-explicit|-stats=none|/home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd|
+!s107 /home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R1
+R2
+R3
+DEx4 work 11 tb_alu_4bit 0 22 Og;g3kK>YV11HoCM;h1AT1
+!i122 5
+l30
+L8 51
+V_eNR<Mi^FY6dPJV2ekT^G2
+!s100 X7B:8n@`n7ekXPLoMAmFC0
+R7
+32
+R17
+!i10b 1
+R18
+R19
+Z20 !s107 /home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd|
+!i113 1
+R12
+R13

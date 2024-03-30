@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="homePane" alignment="center" hgap="10" stylesheets="@JavaFX_180041120.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFX_180041120.JavaFX_180041120Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane id="javaFXcss" fx:id="window1" prefHeight="480.0" prefWidth="704.0">
+         <children>
+            <Button fx:id="exitButtton" layoutX="439.0" layoutY="394.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="42.0" prefWidth="102.0" text="Exit" />
+            <Label fx:id="hpLabel" layoutX="162.0" layoutY="38.0" prefHeight="106.0" prefWidth="380.0" text="Home Page" />
+            <Button fx:id="nextButton" layoutX="162.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="46.0" prefWidth="102.0" text="Next" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

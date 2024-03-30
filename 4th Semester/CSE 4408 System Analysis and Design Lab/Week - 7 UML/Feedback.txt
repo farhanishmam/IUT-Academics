@@ -1,0 +1,7 @@
+-- Present Quickly; take less time on introduction
+
+-- Draw multiple activity diagram for multiple activities
+
+-- Seperate sequence diagram for different features shown in use case diagram
+
+-- Remove Date and Time Class from UML as they are in the Database by default

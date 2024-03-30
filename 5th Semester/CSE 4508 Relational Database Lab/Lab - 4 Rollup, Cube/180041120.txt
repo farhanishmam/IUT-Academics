@@ -1,0 +1,84 @@
+-- Task A --
+
+CREATE TABLE occupation
+(
+	ID INT,
+	general VARCHAR2(20),
+	specific VARCHAR2(20),
+	salary INT,
+	CONSTRAINT occ_pk PRIMARY KEY(ID)
+ );
+ 
+INSERT INTO occupation VALUES (1,'teacher','school',20000);
+INSERT INTO occupation VALUES (2,'teacher','university',40000);
+INSERT INTO occupation VALUES (3,'engineer','cse',60000);
+INSERT INTO occupation VALUES (4,'teacher','school',30000);
+INSERT INTO occupation VALUES (5,'teacher','college',40000);
+INSERT INTO occupation VALUES (6,'engineer','eee',70000);
+INSERT INTO occupation VALUES (7,'teacher','university',60000);
+INSERT INTO occupation VALUES (8,'teacher','college',30000);
+INSERT INTO occupation VALUES (9,'engineer','cse',90000);
+INSERT INTO occupation VALUES (10,'teacher','school',40000);
+INSERT INTO occupation VALUES (11,'engineer','eee',90000);
+INSERT INTO occupation VALUES (12,'engineer','mpe',50000);
+INSERT INTO occupation VALUES (13,'teacher','school',40000);
+INSERT INTO occupation VALUES (14,'engineer','eee',30000);
+INSERT INTO occupation VALUES (15,'engineer','eee',40000);
+
+--1
+SELECT general, specific, COUNT(ID) no_of_people FROM occupation
+GROUP BY general, specific ORDER BY COUNT(ID);
+
+--2
+SELECT general, MIN(salary) min_salary, MAX(salary) max_salary, 
+AVG(salary) avg_salary, SUM(salary) total_salary, COUNT(ID) no_of_people
+FROM occupation GROUP BY general;
+
+--3
+SELECT general FROM
+(SELECT general, AVG(salary) avg_salary
+FROM occupation GROUP BY general
+HAVING AVG(salary) >= (SELECT AVG(salary) FROM occupation));
+
+--4
+CREATE OR REPLACE VIEW avg_sal_gen AS 
+SELECT general,AVG(salary) avg_salary FROM occupation 
+GROUP BY general WITH READ ONLY;
+
+SELECT * FROM avg_sal_gen
+WHERE avg_salary = (SELECT MIN(avg_salary) FROM avg_sal_gen);
+
+--Task B--
+
+CREATE TABLE grades(
+   ID INT NOT NULL,
+   dept VARCHAR2(6),
+   course_code VARCHAR2(10),
+   grade VARCHAR2(3),
+   CONSTRAINT grades_pk PRIMARY KEY(ID,dept,course_code)
+);
+
+INSERT INTO grades VALUES(180041120,'CSE','CSE 4508','A+');
+INSERT INTO grades VALUES(180021120,'EEE','CSE 4551','A+');
+INSERT INTO grades VALUES(180041113,'CSE','MATH 4502','A');
+INSERT INTO grades VALUES(180021122,'EEE','CSE 4551','A-');
+INSERT INTO grades VALUES(180051225,'BTM','EEE 4512','B+');
+INSERT INTO grades VALUES(180021229,'EEE','EEE 4512','A-');
+INSERT INTO grades VALUES(180011220,'MCE','MCE 4521','A-');
+INSERT INTO grades VALUES(180011124,'MCE','MCE 4522','A');
+INSERT INTO grades VALUES(170041140,'CSE','MATH 4702','A');
+INSERT INTO grades VALUES(180031110,'CEE','CEE 4503','C');
+INSERT INTO grades VALUES(180031113,'CEE','CEE 4502','C');
+INSERT INTO grades VALUES(180031118,'CEE','CEE 4502','C');
+INSERT INTO grades VALUES(170041142,'CSE','MATH 4702','A');
+INSERT INTO grades VALUES(180021113,'EEE','CSE 4512','A+');
+INSERT INTO grades VALUES(180021123,'EEE','CSE 4551','A-');
+
+--1
+SELECT dept,course_code,grade,COUNT(DISTINCT ID) no_of_people
+FROM grades GROUP BY ROLLUP (dept,course_code,grade)
+ORDER BY dept,course_code,grade;
+
+--2
+SELECT ID, dept, course_code, grade, COUNT(ID) no_of_people
+FROM grades GROUP BY CUBE(ID, dept, course_code, grade);

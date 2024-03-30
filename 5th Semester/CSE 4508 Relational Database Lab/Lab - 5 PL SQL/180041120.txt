@@ -1,0 +1,137 @@
+--Task-1
+
+DECLARE
+	currentYear Number;
+
+BEGIN
+    SELECT TO_CHAR(sysdate, 'YYYY') INTO currentYear FROM dual;
+
+	IF MOD(currentYear,4) = 0 AND (MOD(currentYear,100) != 0 OR MOD(currentYear,400) = 0)
+	THEN
+        DBMS_OUTPUT.PUT_LINE('Yes');
+	ELSE
+	    DBMS_OUTPUT.PUT_LINE('No');
+	END IF;
+
+	LOOP
+		currentYear := currentYear - 1;
+	    IF MOD(currentYear,4) = 0 AND (MOD(currentYear,100)!=0 OR MOD(currentYear,400) = 0)
+		THEN
+			DBMS_OUTPUT.PUT_LINE(currentYear);
+			EXIT;
+		END IF;
+	END LOOP;
+
+    SELECT TO_CHAR(sysdate, 'YYYY') INTO currentYear FROM dual;
+	LOOP
+		currentYear := currentYear + 1;
+	    IF MOD(currentYear,4) = 0 AND (MOD(currentYear,100) != 0 OR MOD(currentYear,400) = 0)
+		THEN
+			DBMS_OUTPUT.PUT_LINE(currentYear);
+			EXIT;
+		END IF;
+	END LOOP;
+END;
+/
+
+--Task-2
+
+CREATE PROCEDURE inspectString(inString IN VARCHAR2)
+IS
+    character VARCHAR2(1);
+    outString VARCHAR2(20);
+    reveresedString VARCHAR2(20);
+
+BEGIN
+    FOR i IN 1..LENGTH(inString) LOOP
+        character := SUBSTR(inString, i, 1);
+        IF i = 1 THEN outString := character;
+        ELSE outString := outString ||' '|| character;
+        END IF;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE(outString);
+
+    FOR i IN REVERSE 1..LENGTH(inString)
+	LOOP
+        character := SUBSTR(inString, i, 1);
+        reveresedString := reveresedString || character;
+    END LOOP;
+
+    IF LOWER(inString) = LOWER(reveresedString) THEN
+      DBMS_OUTPUT.PUT_LINE('Yes');
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('No');
+    END IF;
+END;
+/
+
+BEGIN
+    inspectString('tawAT');
+END;
+
+--Task-3
+
+CREATE PROCEDURE checkPrime(inNumber IN NUMBER, output OUT BOOLEAN)
+IS
+BEGIN
+    output := TRUE;
+    FOR i IN 2..inNumber/2 LOOP
+         IF MOD(inNumber, i) = 0 THEN
+            output := FALSE;
+         END IF;
+    END LOOP;
+END;
+/
+
+CREATE PROCEDURE nearestPrime(inNumber IN NUMBER)
+IS
+    prevPrime NUMBER := inNumber;
+    nextPrime NUMBER := inNumber;
+    primeOutput BOOLEAN;
+BEGIN
+   LOOP
+      prevPrime := prevPrime - 1;
+      checkPrime(prevPrime, primeOutput);
+      IF primeOutput = TRUE THEN
+          EXIT;
+      END IF;
+   END LOOP;
+
+   LOOP
+      nextPrime := nextPrime + 1;
+      checkPrime(nextPrime, primeOutput);
+      IF primeOutput = TRUE THEN
+          EXIT;
+      END IF;
+   END LOOP;
+   DBMS_OUTPUT.PUT_LINE(prevPrime|| ' ' || nextPrime);
+END;
+/
+BEGIN
+    nearestPrime(49);
+END;
+
+--Task-4
+
+CREATE TABLE Users
+(
+    username VARCHAR2(20),
+    password_length NUMBER
+);
+
+INSERT INTO Users VALUES('Farhan',4);
+INSERT INTO Users VALUES('Ishmam',5);
+INSERT INTO Users VALUES('NewUser',3);
+
+DECLARE
+    maxLength Users.password_length%type;
+    permutations DOUBLE PRECISION := 1;
+
+BEGIN
+   SELECT MAX(password_length) INTO maxLength FROM Users;
+   FOR i IN 1..maxLength LOOP
+        permutations := permutations * (52 - (i - 1));
+   END LOOP;
+   DBMS_OUTPUT.PUT_LINE(permutations);
+END;
+/

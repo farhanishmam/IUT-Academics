@@ -1,0 +1,10 @@
+1) Go to Project Structure and add JavaFX library (javafx-sdk-15.0.1\lib)
+
+	Add the library folder only
+	
+2) Set VM Option in run\configuration
+
+--module-path "C:\Program Files\Java\javafx-sdk-15.0.1\lib" --add-modules javafx.controls,javafx.fxml
+
+Change the C:\Program Files\Java\ depending on your path
+

@@ -1,0 +1,54 @@
+.root
+{
+    -fx-background-color: #deb5ee;
+    -fx-alignment: center;
+}
+
+.label
+{
+    -fx-border-color: black ;
+    -fx-border-style: dashed;
+    -fx-border-width: 2px;
+    -fx-alignment: center;
+}
+
+.button
+{
+    -fx-font-family: Sylfaen;
+    -fx-font-size: 18;
+    -fx-background-color: #4f8ef3;
+    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0, 6, 0);
+    -fx-background-radius: 8;
+}
+.button:hover
+{
+    -fx-background-color: #3c4cde;
+    -fx-font-size: 22;
+}
+#hpLabel
+{
+    -fx-font-size: 35;
+    -fx-font-family: "Felix Titling";
+}
+
+#page2label
+{
+    -fx-font-size: 35;
+    -fx-font-family: "Felix Titling";
+}
+
+#confirmLabel
+{
+    -fx-border-width: 0px;
+    -fx-font-size: 16px;
+}
+#yesButton:hover
+{
+    -fx-font-size: 18;
+}
+
+#noButton
+{
+    -fx-font-size: 18;
+}
+

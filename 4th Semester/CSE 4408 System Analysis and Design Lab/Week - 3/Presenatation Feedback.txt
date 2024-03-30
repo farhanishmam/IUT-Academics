@@ -1,0 +1,3 @@
+-- Another slide can be included to show more graphs and details about the questions we asked
+
+-- Change the goals and frustations of persona to something relevant to the project

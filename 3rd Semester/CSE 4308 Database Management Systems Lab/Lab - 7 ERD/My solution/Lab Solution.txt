@@ -1,0 +1,55 @@
+CREATE TABLE Branch 
+(
+	BranchID INT,
+	BranchName VARCHAR(30),
+	Year_of_Establishment DATE,
+	Adress VARCHAR2(150),
+    PRIMARY KEY (Branch ID)
+);
+
+CREATE TABLE Staff
+(
+	StaffID INT,
+	Name VARCHAR2(30),
+	NID INT,
+	BloodGroup VARCHAR2(2),
+	Category VARCHAR2(15),
+	Birth_date Date,
+	PRIMARY KEY (StaffID),
+	PRIMARY KEY  (NID)
+);
+
+CREATE TABLE User
+(
+	Username Varchar2(30),
+	Name Varchar2(30),
+	Birth_date Date,
+	Occupation VARCHAR2(20),
+	Gender VARCHAR2(10),
+	Primary KEY (Username)
+);
+
+CREATE Table Books
+(
+	BookID INT,
+	NAme VARCHAR2(30),
+	Author VARCHAR2(30),
+	Publisher VARCHAR2(30),
+	Price INT,
+	Study_Area VARCHAR2(30)
+);
+
+CREATE Table PUBLISHERS
+(
+	Name VARCHAR2(30),
+	City VARCHAR2(30),
+	Primary Key (Name, city)
+);
+
+CREATE TABLE RECORDS
+
+CREATE TABLE braches_books
+
+CREATE TABLE shift_time
+
+CREATE TABLE Published_by

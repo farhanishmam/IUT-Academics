@@ -1,0 +1,11 @@
+Star Pattern
+
+	https://codeforwin.org/2015/07/star-patterns-program-in-c.html
+
+Multidimensional Array
+	
+	https://www.geeksforgeeks.org/multidimensional-arrays-c-cpp/
+
+Recursion
+
+	http://zobayer.blogspot.com/2009/12/cse-102-practice-recursions.html

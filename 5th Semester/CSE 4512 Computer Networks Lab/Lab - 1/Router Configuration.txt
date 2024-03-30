@@ -1,0 +1,22 @@
+Configure Router
+
+enable 
+configure terminal
+hostname r1_180041120
+
+enable secret class
+line console 0
+password cisco
+login
+exit
+line vty 0 4
+password cisco
+login
+exit
+service password-encryption
+
+exit
+copy running-config startup-config
+
+
+

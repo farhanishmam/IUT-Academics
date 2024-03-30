@@ -1,0 +1,19 @@
+{/home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd} {1 {vcom -work 4bit_ALU -2002 -explicit -stats=none {/home/kurogami/Documents/VHDL/4-bit ALU/4BIT_ALU.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity ALU_4bit
+-- Compiling architecture behavioral of ALU_4bit
+
+} {} {}} {/home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd} {1 {vcom -work 4bit_ALU -2002 -explicit -stats=none {/home/kurogami/Documents/VHDL/4-bit ALU/tb_4BIT_ALU.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity tb_ALU_4BIT
+-- Compiling architecture behavioral of tb_ALU_4BIT
+
+} {} {}}

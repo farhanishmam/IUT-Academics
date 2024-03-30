@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1622457714 source:c:\users\asus\documents\sim1\lcgrand1.c
+
+1622457714 source:c:\users\asus\documents\sim1\mm12.c
+	<stdio.h>
+	<math.h>
+	"lcgrand.h"
+
+903918616 c:\users\asus\documents\sim1\lcgrand.h
+	"lcgrand.h"
+
+1622410914 source:c:\users\farhan ishmam\desktop\sim1\lcgrand1.c
+
+1622410914 source:c:\users\farhan ishmam\desktop\sim1\mm12.c
+	<stdio.h>
+	<math.h>
+	"lcgrand.h"
+
+903871816 c:\users\farhan ishmam\desktop\sim1\lcgrand.h
+	"lcgrand.h"
+

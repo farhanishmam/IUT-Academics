@@ -1,0 +1,138 @@
+--1
+CREATE TABLE Customer 
+(
+	C_ID INT,
+	Email VARCHAR2(30),
+	Name VARCHAR2(20),
+	Address VARCHAR2(100),
+	Phone_No INT,
+	Card_Info INT,
+	CONSTRAINT Customer_pk PRIMARY KEY (C_ID, Email)
+);
+
+CREATE TABLE Department
+(
+	Dept_ID INT,
+	Name VARCHAR2(30),
+	Description VARCHAR2(400),
+	CONSTRAINT DeptID_pk PRIMARY (KEY Dept_ID)
+);
+
+CREATE TABLE Shopping_Cart
+(
+	Cart_ID INT,
+	Date_added DATE,
+	CONSTRAINT CartID_PK PRIMARY KEY (Cart_ID)
+);
+
+CREATE TABLE Shop_Order
+(
+	Order_ID INT,
+	Shipping_info INT,
+	Cust_ID INT,
+	Email VARCHAR2(30),
+	CONSTRAINT OrderID_PK PRIMARY KEY (Order_ID),
+	CONSTRAINT Customer_Order_fk FOREIGN KEY(Cust_ID, Email) REFERENCES Customer(C_ID, Email) ON DELETE CASCADE
+);
+
+CREATE TABLE Product
+(
+	P_ID INT,
+	Name VARCHAR2(30),
+	Price INT,
+	Product_CatID INT,
+	Description VARCHAR2(400),
+	CONSTRAINT PID_pk PRIMARY KEY (P_ID),
+	CONSTRAINT Prod_ProdCat_fk (Product_CatID) REFERENCES Product_Category(Cat_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Product_Category
+(
+	Cat_ID INT,
+	Name VARCHAR2(30),
+	Dept_ID INT,
+	CONSTRAINT CatID_pk PRIMARY KEY (Cat_ID),
+	CONSTRAINT Dept_ProdCat_fk FOREIGN KEY (Dept_ID) REFERENCES Department (Dept_ID) ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE Cart_Has_Product
+(
+	Cart_ID INT,
+	Prod_ID INT,
+	CONSTRAINT Cart_pk PRIMARY KEY(Cart_ID, Prod_ID),
+	CONSTRAINT Cart_Has_fk FOREIGN KEY(Cart_ID) REFERENCES shopping_cart(Cart_ID) ON DELETE CASCADE,
+	CONSTRAINT Prod_Has_fk FOREIGN KEY(Prod_ID) REFERENCES product(P_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Add_item
+(
+	Cust_ID INT,
+	Shop_Cart_ID INT,
+	Product_ID INT,
+	Email VARCHAR2(30),	
+	Quantity INT,
+	CONSTRAINT Add_item_pk PRIMARY KEY(C_ID, CartID),
+	CONSTRAINT Customer_Item_fk FOREIGN KEY(Cust_ID, Email) REFERENCES CUSTOMER(C_ID, Email) ON DELETE CASCADE,
+	CONSTRAINT ShopCart_item_fk FOREIGN KEY(Cart_ID) REFERENCES shopping_cart(Cart_ID) ON DELETE CASCADE,
+	CONSTRAINT Prod_item_fk FOREIGN KEY(Product_ID) REFERENCES Product(P_ID) ON DELETE CASCADE	
+);
+
+--2
+
+--I think all foreign keys should have on delete cascade because all of them have one minimum cardinality
+
+--3
+
+CREATE OR REPLACE VIEW Shopping_Cart_Details AS
+SELECT Add_item.Cart_ID , Shopping_Cart.date_added, Add_item.Product_ID, Product.Name, Product. Price
+FROM Add_item, Shopping_cart, Product 
+WHERE Add_item.Cart_ID = Shopping_cart.Cart_ID AND Add_item.Product_ID = Product.P_ID;
+
+CREATE VIEW Product_Purchase_Total AS
+SELECT Shopping_Cart_Details.Cart_ID, Shopping_Cart_Details.Date_added, Shopping_Cart_Details.Prod_ID, Shopping_Cart_Details.Price, Purchase_Amount FROM Shopping_Cart_Details, Product, (SELECT P_ID AS Prod_ID,Count(*) AS Purchase_Amount FROM PRODUCT GROUP BY P_ID) 
+WHERE Shopping_Cart_Details.Product_ID = Product.P_ID AND Prod_ID = Product.P_ID;
+
+--4
+CREATE OR REPLACE VIEW Customer_Purchase_History AS
+SELECT Customer.C_ID AS Customer_ID, Customer.Email, Customer.Name, Customer.Address, Customer.Phone_No, Customer.Card_Info, Add_item.Product_ID, Add_item.Quantity
+FROM Customer, Add_item 
+WHERE Add_item.Cust_ID = Customer.C_ID;
+
+--5
+CREATE ROLE read_customer_role;
+GRANT SELECT ON customer TO read_customer_role;
+
+CREATE USER customer_user IDENTIFIED BY SYSTEM;
+GRANT read_customer_role TO customer_user;
+
+CREATE ROLE read_salesperson_role;
+GRANT SELECT ON shopping_cart, shop_order TO read_salesperson_role;
+
+CREATE ROLE modify_salesperson_role;
+GRANT INSERT ON shopping_cart, shop_order TO modify_salesperson_role;
+GRANT DELETE ON shopping_cart, shop_order TO modify_salesperson_role;
+GRANT UPDATE ON shopping_cart, shop_order TO modify_salesperson_role;
+
+CREATE USER salesperson IDENTIFIED BY SYSTEM;
+GRANT read_salesperson_role TO salesperson;
+GRANT modify_salesperson_role TO salesperson;
+
+
+CREATE ROLE read_manager_role;
+GRANT SELECT ON customer, department, product_category, product TO read_manager_role;
+
+CREATE ROLE modify_manager_role;
+GRANT UPDATE ON  customer TO  modify_manager_role
+GRANT INSERT ON department, product_category, product TO modify_manager_role;
+GRANT DELETE ON department, product_category, product TO modify_manager_role;
+GRANT UPDATE ON department, product_category, product TO modify_manager_role;
+
+CREATE USER manager IDENTIFIED BY SYSTEM;
+GRANT read_manager_role TO manager;
+GRANT modify_manager_role TO manager;
+
+
+
+

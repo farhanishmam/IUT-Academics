@@ -1,0 +1,4 @@
+00 - Middle green, sideways red
+01 - Middle yellow, sideways red
+10 - Middle red, sideways green
+11 - Middle red, sideways yellow

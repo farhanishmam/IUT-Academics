@@ -1,0 +1,175 @@
+--Task A
+
+CREATE TABLE dept(
+  DEPT_ID INT,
+  DEPT_NAME VARCHAR2(4),
+  CONSTRAINT dept_pk PRIMARY KEY(DEPT_ID)
+);
+
+CREATE TABLE employees(
+  FIRST_NAME VARCHAR2(15),
+  LAST_NAME VARCHAR2(15),
+  EMPLOYEE_ID INT,
+  DEPT_ID INT,
+  SALARY NUMBER(9,2),
+  CONSTRAINT emp_pk PRIMARY KEY(EMPLOYEE_ID),
+  CONSTRAINT emp_dept_fk FOREIGN KEY(DEPT_ID) REFERENCES dept
+);
+
+INSERT INTO dept VALUES (1, 'CSE');
+INSERT INTO dept VALUES (2, 'MCE');
+INSERT INTO dept VALUES (3, 'EEE');
+INSERT INTO dept VALUES (4, 'CEE');
+
+INSERT INTO employees VALUES ('Fardin','Saad', 1, 2, 835.32);
+INSERT INTO employees VALUES ('Mezbaur','Rahman', 2, 2, 987.2);
+INSERT INTO employees VALUES ('Tasnim','Ahmed', 3, 2, 2505.95);
+INSERT INTO employees VALUES ('Shahriar','Ivan', 4, 2, 1746.57);
+INSERT INTO employees VALUES ('Anas','Jawad', 5, 1, 4024.7);
+INSERT INTO employees VALUES ('Bakhtiar','Ahmed', 7, 3, 700);
+
+DECLARE
+    affected_rows INT;
+BEGIN
+    UPDATE
+        employees
+    SET
+        salary = salary*1.5
+    WHERE
+        DEPT_ID = (SELECT DEPT_ID FROM dept WHERE DEPT_NAME='MCE');
+
+    IF sql%notfound THEN
+        dbms_output.put_line('There are no employees in MCE');
+    ELSIF sql%found THEN
+        affected_rows := sql%rowcount;
+    END IF;
+
+    UPDATE
+        employees
+    SET
+        salary = salary*0.9
+    WHERE
+        DEPT_ID = (SELECT DEPT_ID FROM dept WHERE DEPT_NAME='CSE');
+
+    IF sql%notfound THEN
+        dbms_output.put_line('There are no employees in CSE');
+    ELSIF sql%found THEN
+        affected_rows := affected_rows + sql%rowcount;
+    END IF;
+
+    dbms_output.put_line(affected_rows);
+END;
+/
+
+--Task B
+
+CREATE OR REPLACE FUNCTION nth_highest_salary(n NUMBER)
+    RETURN NUMBER
+    IS
+        n_salary NUMBER;
+        row_num INT;
+
+        CURSOR cur IS
+            SELECT salary FROM employees ORDER BY salary DESC;
+
+    BEGIN
+        FOR emp_cur IN cur
+        LOOP
+            row_num := cur%rowcount;
+            IF row_num=n THEN
+                n_salary := emp_cur.salary;
+            END IF;
+        END LOOP;
+        RETURN n_salary;
+    END;
+/
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(1));
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(2));
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(3));
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(4));
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(5));
+    DBMS_OUTPUT.PUT_LINE(nth_highest_salary(6));
+END;
+/
+
+--Task C
+
+CREATE TABLE transactions(
+    user_id INT NOT NULL,
+    amount NUMBER(9,2) NOT NULL,
+    t_date DATE NOT NULL
+);
+
+CREATE TABLE loan_type(
+    scheme INT,
+    installment_no INT NOT NULL,
+    charge NUMBER(9,2) NOT NULL,
+    minimum_trans NUMBER(9,2) NOT NULL,
+    CONSTRAINT loan_type_pk PRIMARY KEY (scheme)
+);
+
+INSERT INTO transactions VALUES (1,35000, (TO_DATE('2021/05/12','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (1,40000, (TO_DATE('2021/02/15','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (1,100000, (TO_DATE('2021/05/01','yyyy/mm/dd')));
+
+INSERT INTO transactions VALUES (2,900000, (TO_DATE('2020/07/29','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (2,600000, (TO_DATE('2020/06/22','yyyy/mm/dd')));
+
+INSERT INTO transactions VALUES (3,500000, (TO_DATE('2021/07/11','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (3,5500, (TO_DATE('2021/07/23','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (3,8000, (TO_DATE('2021/07/26','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (3,1000, (TO_DATE('2021/08/21','yyyy/mm/dd')));
+
+INSERT INTO transactions VALUES (4,90000, (TO_DATE('2021/01/1','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (4,780000, (TO_DATE('2021/02/21','yyyy/mm/dd')));
+INSERT INTO transactions VALUES (4,120000, (TO_DATE('2019/03/16','yyyy/mm/dd')));
+
+INSERT INTO loan_type VALUES (1,30,0.05,2000000);
+INSERT INTO loan_type VALUES (2,20,0.1,1000000);
+INSERT INTO loan_type VALUES (3,15,0.15,500000);
+
+CREATE OR REPLACE FUNCTION user_scheme(u_id NUMBER)
+RETURN INT
+IS
+    scheme loan_type.scheme%TYPE;
+    minimum_trans loan_type.minimum_trans%TYPE;
+    total_amount NUMBER;
+
+CURSOR cur_loan IS
+    SELECT scheme,minimum_trans FROM loan_type;
+
+CURSOR cur_transaction IS
+    SELECT SUM(amount) FROM transactions WHERE user_id=u_id;
+
+BEGIN
+    OPEN cur_transaction;
+    FETCH 
+        cur_transaction 
+    INTO 
+        total_amount;
+    OPEN cur_loan;
+    LOOP
+        FETCH 
+            cur_loan 
+        INTO 
+            scheme,minimum_trans;
+        EXIT WHEN 
+            cur_loan%notfound;
+        IF total_amount >= minimum_trans THEN
+            EXIT;
+        END IF;
+    END LOOP;
+    CLOSE cur_loan;
+    CLOSE cur_transaction;
+    RETURN scheme;
+END;
+/
+
+BEGIN
+    dbms_output.put_line(user_scheme(4));
+    dbms_output.put_line(user_scheme(1));
+    dbms_output.put_line(user_scheme(2));
+    dbms_output.put_line(user_scheme(3));
+END;

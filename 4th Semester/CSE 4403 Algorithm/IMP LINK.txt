@@ -1,0 +1,1 @@
+https://www.quora.com/What-are-differences-between-dynamic-divide-and-conquer-and-greedy-programming#:~:text=In%20divide%20and%20conquer%20we,without%20caring%20of%20future%20steps.

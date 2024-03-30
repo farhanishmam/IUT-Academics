@@ -1,0 +1,50 @@
+--1
+
+--Branch is created before Employee since Employee has a foreign key that refers to Branch
+
+CREATE TABLE Branch
+(
+	BID INT,
+	Name VARCHAR2(24),
+	Location VARCHAR2(24),
+	CONSTRAINT branch_pk PRIMARY KEY(BID)
+);
+	
+CREATE TABLE Employee
+(
+	EID INT,
+	Name VARCHAR2(24),
+	Salary INT,
+	BID INT,
+	CONSTRAINT employee_pk PRIMARY KEY(EID),
+	CONSTRAINT employee_branch_fk FOREIGN KEY(BID) REFERENCES Branch(BID)
+);
+
+INSERT INTO Branch VALUES(01,'A','Dhaka');
+INSERT INTO Branch VALUES(02,'B','Chittagong');
+INSERT INTO Branch VALUES(03,'C','Dhaka');
+INSERT INTO Branch VALUES(04,'D','Rajshahi');
+
+INSERT INTO Employee VALUES (101,'Farhan Ishmam', 100000, 01);
+INSERT INTO Employee VALUES (102,'a', 20000, 02);
+INSERT INTO Employee VALUES (103,'b', 30000, 02);
+INSERT INTO Employee VALUES (104,'c', 15000, 02);
+INSERT INTO Employee VALUES (105,'d', 16000, 04);
+INSERT INTO Employee VALUES (106,'e', 17000, 03);
+INSERT INTO Employee VALUES (107,'f', 19000, 02);
+INSERT INTO Employee VALUES (108,'g', 20000, 01);
+INSERT INTO Employee VALUES (109,'h', 24000, 03);
+INSERT INTO Employee VALUES (110,'i', 45000, 01);
+INSERT INTO Employee VALUES (111,'j', 20000, 03);
+INSERT INTO Employee VALUES (112,'k', 70000, 04);
+
+--2
+
+SELECT COUNT(*) AS No_Of_Employees FROM Employee WHERE BID = (SELECT BID FROM Branch WHERE Name = 'A') AND Employee.Salary>(SELECT AVG(salary) FROM Employee);
+
+SELECT Name AS Department_Name FROM Branch WHERE BID = (SELECT BID FROM Employee WHERE Name = 'Farhan Ishmam');
+
+SELECT Location, COUNT(*) AS Emp_Count  FROM (SELECT *FROM Employee, Branch WHERE Employee.BID = Branch.BID) GROUP BY Location ORDER BY Emp_Count;
+
+
+

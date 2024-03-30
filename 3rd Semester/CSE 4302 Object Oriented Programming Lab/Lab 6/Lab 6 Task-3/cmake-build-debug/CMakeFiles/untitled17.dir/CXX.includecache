@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/IUT/Programming/C++ programs/untitled17/TAKA.h
+iostream
+-
+
+E:/IUT/Programming/C++ programs/untitled17/main.cpp
+iostream
+-
+TAKA.h
+E:/IUT/Programming/C++ programs/untitled17/TAKA.h
+

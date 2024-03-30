@@ -1,0 +1,93 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/home/kurogami/Documents/VHDL
+Edemux_1x8
+Z0 w1611311534
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 4
+Z3 d/home/kurogami/Documents/VHDL/1 to 8 DEMUX
+Z4 8/home/kurogami/Documents/VHDL/1 to 8 DEMUX/DEMUX1x8.vhd
+Z5 F/home/kurogami/Documents/VHDL/1 to 8 DEMUX/DEMUX1x8.vhd
+l0
+L4 1
+Vzb?MZDN3FPn`_;W8<lzcL3
+!s100 ZO3V2jB7WjcgRlBG=oV9f2
+Z6 OV;C;2020.1;71
+32
+Z7 !s110 1611311535
+!i10b 1
+Z8 !s108 1611311535.000000
+Z9 !s90 -reportprogress|300|-work|DEMUX_1x8|-2002|-explicit|-stats=none|/home/kurogami/Documents/VHDL/1 to 8 DEMUX/DEMUX1x8.vhd|
+Z10 !s107 /home/kurogami/Documents/VHDL/1 to 8 DEMUX/DEMUX1x8.vhd|
+!i113 1
+Z11 o-work DEMUX_1x8 -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+DEx4 work 9 demux_1x8 0 22 zb?MZDN3FPn`_;W8<lzcL3
+!i122 4
+l13
+L12 11
+V=>b`6C8E9PR@@0zoPNbMi3
+!s100 QhEm@ma[Y]Am=8l0LX^RQ0
+R6
+32
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+R12
+Etb_demux_1x8
+Z13 w1611313997
+R1
+R2
+!i122 10
+R3
+Z14 8/home/kurogami/Documents/VHDL/1 to 8 DEMUX/tb_DEMUX1x8.vhd
+Z15 F/home/kurogami/Documents/VHDL/1 to 8 DEMUX/tb_DEMUX1x8.vhd
+l0
+L4 1
+V>hVk=HQF>kSjM3lKlU<^A2
+!s100 cOzSXIO@5^kjN13]jSkA92
+R6
+32
+Z16 !s110 1611313998
+!i10b 1
+Z17 !s108 1611313998.000000
+Z18 !s90 -reportprogress|300|-work|DEMUX_1x8|-2002|-explicit|-stats=none|/home/kurogami/Documents/VHDL/1 to 8 DEMUX/tb_DEMUX1x8.vhd|
+Z19 !s107 /home/kurogami/Documents/VHDL/1 to 8 DEMUX/tb_DEMUX1x8.vhd|
+!i113 1
+R11
+R12
+Abehavioral
+R1
+R2
+Z20 DEx4 work 12 tb_demux_1x8 0 22 >hVk=HQF>kSjM3lKlU<^A2
+!i122 10
+l24
+L7 68
+VLjbXQSk=L3<`mFmMI7Tf^0
+!s100 ;lL9lohmWB2Q0i2B>J:U`1
+R6
+32
+R16
+!i10b 1
+R17
+R18
+R19
+!i113 1
+R11
+R12

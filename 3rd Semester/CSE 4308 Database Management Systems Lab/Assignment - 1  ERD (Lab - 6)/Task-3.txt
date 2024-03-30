@@ -1,0 +1,65 @@
+CREATE TABLE Division 
+(
+  Name VARCHAR(30),
+  PRIMARY KEY (Name)
+);
+
+CREATE TABLE District 
+(
+  Name VARCHAR(30),
+  Division_Name VARCHAR(30),
+  PRIMARY KEY (Name),
+  FOREIGN KEY(Division_Name) REFERENCES Division
+);
+
+CREATE TABLE Blood_Group (
+  Name VARCHAR(2),
+  PRIMARY KEY (Name)
+);
+
+CREATE TABLE Profession 
+(
+	ID INT,
+  Name VARCHAR(30),
+  Qualifiaction VARCHAR(50),
+  Salary INT,
+  PRIMARY KEY (ID)
+);
+
+
+CREATE TABLE Citizen 
+(
+  ID INT,
+  Date_of_Birth DATE,
+  BloodGroup VARCHAR(2),
+  Address_district VARCHAR(30),
+  Address_division VARCHAR(30),
+  Profession_ID INT,
+  PRIMARY KEY (ID),
+  FOREIGN KEY(Address_district) REFERENCES District,
+  FOREIGN KEY(Address_division) REFERENCES Division,
+  FOREIGN KEY(BloodGroup) REFERENCES Blood_Group,
+  FOREIGN KEY(Profession_ID) REFERENCES Profession
+);
+
+SQL:
+--1
+SELECT Bloodgroup,count(*)
+from citizen
+group by Bloodgroup;
+
+--2
+SELECT Profession.ID,Profession.Name,Profession.Salary,Count(C_ID)
+FROM citizen NATURAL JOIN Profession
+GROUP BY Profession.ID,Profession.Name,Profession.Salary;
+
+--3
+SELECT Profession.ID,Profession.Name,Count(C_ID)
+FROM Citizen NATURAL JOIN profession
+GROUP BY Profession.ID, Profession.Name
+ORDER BY count(Profession.ID) desc LIMIT 3;
+
+
+
+
+

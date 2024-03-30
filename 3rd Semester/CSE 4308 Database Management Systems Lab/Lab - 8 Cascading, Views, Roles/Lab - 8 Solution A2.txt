@@ -1,0 +1,169 @@
+--Task 1
+CREATE TABLE Person
+(
+    P_ID INT,
+    F_Name VARCHAR2(20),
+    L_Name VARCHAR2(20),
+    Address VARCHAR2(80),
+    Mobile VARCHAR2(13),
+    CONSTRAINT person_pk PRIMARY KEY(P_ID)
+);
+
+CREATE TABLE Accounts
+(
+    Account_ID INT,
+    Acc_Type VARCHAR2(20),
+    Balance INT,
+    Rate NUMBER(4,2),
+    Status VARCHAR2(10),
+    B_ID INT,
+    CONSTRAINT accounts_pk PRIMARY KEY(Account_ID),
+    CONSTRAINT acc_branches_fk FOREIGN KEY(B_ID) REFERENCES Branches(B_ID) ON DELETE CASCADE
+    --Every acc must have a branch
+);
+
+CREATE TABLE Customers
+(
+    C_ID INT,
+    Company VARCHAR2(20),
+    Cust_type VARCHAR2(20),
+    P_ID INT,
+    CONSTRAINT customers_pk PRIMARY KEY(C_ID),
+    CONSTRAINT cust_per_fk FOREIGN KEY (P_ID) REFERENCES Person(P_ID) ON DELETE CASCADE
+    --If we delete a person then the customer shouldn't exist because 1..1 cardinality
+);
+
+CREATE TABLE Branches
+(
+    B_ID INT,
+    B_Name VARCHAR2(20),
+    Country VARCHAR2(20),
+    City VARCHAR2(20),
+    Phone VARCHAR2(13),
+    Manager VARCHAR2(30) ,
+    CONSTRAINT  branches_pk PRIMARY KEY (B_ID)
+);
+
+CREATE TABLE Transaction
+(
+    Trans_ID INT,
+    Date_Time DATE,
+    Trans_Type VARCHAR2(20),
+    Amount INT,
+    E_ID INT,
+    CONSTRAINT transaction_pk PRIMARY KEY(Trans_ID,Date_Time),
+    CONSTRAINT trans_emp_fk FOREIGN KEY(E_ID) REFERENCES Employees(E_ID) ON DELETE CASCADE
+    --1..1 between trans and emp. Every trans must have an emp
+);
+
+CREATE TABLE Employees
+(
+    E_ID INT,
+    Job_type VARCHAR2(20),
+    Salary INT,
+    Hourly  Number(8,2),
+    P_ID INT,
+    CONSTRAINT emp_pk PRIMARY KEY(E_ID),
+    CONSTRAINT emp_per_fk FOREIGN KEY (P_ID) REFERENCES Person(P_ID) ON DELETE CASCADE
+    --There can be no employee without a p_id
+);
+
+CREATE TABLE Perform
+(
+    Account_ID INT,
+    Trans_ID INT,
+    Date_Time DATE,
+    C_ID INT,
+    CONSTRAINT perform_pk PRIMARY KEY(Account_ID,Trans_ID,C_ID,Date_Time),
+    CONSTRAINT perf_acc_fk FOREIGN KEY(Account_ID) REFERENCES Accounts(Account_ID) ON DELETE CASCADE,
+    CONSTRAINT perf_trans_fk FOREIGN KEY (Trans_ID,Date_Time) REFERENCES Transaction(Trans_ID,Date_Time) ON DELETE CASCADE,
+    CONSTRAINT perf_cust_fk FOREIGN KEY (C_ID) REFERENCES Customers(C_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Work
+(
+    B_ID INT,
+    E_ID INT,
+    Levels VARCHAR2(20),
+    Password VARCHAR2(30),
+    CONSTRAINT work_pk PRIMARY KEY(B_ID,E_ID),
+    CONSTRAINT work_branches_fk FOREIGN KEY(B_ID) REFERENCES Branches(B_ID) ON DELETE CASCADE,
+    CONSTRAINT work_employees_fk FOREIGN KEY(E_ID) REFERENCES Employees(E_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Open
+(
+    Accounts_ID INT,
+    C_ID INT,
+    CONSTRAINT open_pk PRIMARY KEY(Accounts_ID,C_ID),
+    CONSTRAINT open_acc_fk FOREIGN KEY(Accounts_ID) REFERENCES Accounts(Account_ID) ON DELETE CASCADE,
+    CONSTRAINT open_cust_fk FOREIGN KEY(C_ID) REFERENCES Customers(C_ID) ON DELETE CASCADE
+);
+
+--Task 2
+CREATE OR REPLACE VIEW Customer_Account_Details AS
+    SELECT C_ID,Cust_type,Account_ID,Acc_Type,Balance,Rate
+    FROM Customers, Accounts WHERE Customers.C_ID = Accounts.Account_ID;
+
+CREATE OR REPLACE VIEW Customer_Balance_Total AS
+    SELECT  C_ID AS CUSTOMER_ID, COUNT(Balance) AS Total_balance
+    FROM Customer_Account_Details;
+
+SELECT *FROM Customer_Balance_Total;
+
+--Task 3
+CREATE OR REPLACE VIEW Customer_Transaction_History AS
+    SELECT C_ID AS Customer_ID, Account_ID, Perform.Date_Time, Amount
+    FROM Perform, Transaction
+    WHERE Perform.Trans_ID = Transaction.Trans_ID AND Perform.Date_Time = Transaction.Date_Time;
+
+--Task 4
+CREATE ROLE read_customer;
+GRANT SELECT ON Customers TO read_customer;
+GRANT SELECT ON Accounts TO read_customer;
+
+CREATE ROLE read_accountant;
+GRANT SELECT ON Transaction TO read_accountant;
+GRANT SELECT ON Accounts TO read_accountant;
+
+CREATE USER customer_user IDENTIFIED BY cust;
+GRANT read_customer TO customer_user;
+
+CREATE ROLE modify_accountant;
+GRANT UPDATE ON Transaction TO modify_accountant;
+GRANT INSERT ON Transaction TO modify_accountant;
+GRANT DELETE ON Transaction TO modify_accountant;
+GRANT UPDATE ON Accounts TO modify_accountant;
+GRANT INSERT ON Accounts TO modify_accountant;
+GRANT DELETE ON Accounts TO modify_accountant;
+
+CREATE USER accountants IDENTIFIED BY accountant;
+GRANT read_accountant TO accountants;
+GRANT modify_accountant TO accountants;
+
+CREATE ROLE read_manager;
+GRANT SELECT ON Customers To read_manager;
+GRANT SELECT ON Employees To read_manager;
+GRANT SELECT ON Branches To read_manager;
+
+CREATE ROLE modify_manager;
+GRANT INSERT ON Customers To read_manager;
+GRANT UPDATE ON Customers To read_manager;
+GRANT DELETE ON Customers To read_manager;
+
+GRANT INSERT ON Employees To read_manager;
+GRANT UPDATE ON Employees To read_manager;
+GRANT DELETE ON Employees To read_manager;
+
+GRANT INSERT ON Branches To read_manager;
+GRANT UPDATE ON Branches To read_manager;
+GRANT DELETE ON Branches To read_manager;
+
+CREATE USER managers IDENTIFIED BY manager;
+GRANT read_manager TO managers;
+GRANT modify_manager TO managers;
+
+
+
+
+

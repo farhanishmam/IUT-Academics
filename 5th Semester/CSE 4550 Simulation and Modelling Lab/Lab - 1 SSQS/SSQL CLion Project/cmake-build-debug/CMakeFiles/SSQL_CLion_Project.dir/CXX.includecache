@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/event.h
+
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/main.cpp
+iostream
+-
+fstream
+-
+scheduler.h
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/scheduler.h
+server.h
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/server.h
+
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/queue.h
+
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/scheduler.h
+event.h
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/event.h
+
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/server.h
+event.h
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/event.h
+queue.h
+D:/Academics Current Lab/CSE 4550 Simulation and Modelling Lab/Lab - 1 SSQS/SSQL CLion Project/queue.h
+math.h
+-
+iostream
+-
+fstream
+-
+

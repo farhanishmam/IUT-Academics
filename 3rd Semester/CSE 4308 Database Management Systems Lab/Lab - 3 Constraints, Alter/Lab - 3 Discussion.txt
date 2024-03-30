@@ -1,0 +1,31 @@
+Discussion on the lab tasks of Lab 03.
+
+
+Task 1
+
+This task was pretty straightforward. You have a schema diagram with 3 relations. In the Department relation, dept_name is the primary key. In the Student relation, student_id is the primary key and s_dept is a foreign key referencing the dept_name column of the Department relation. In the Employee relation, e_id is the primary key, while e_dept is a foreign key that is referencing the dept_name column of the Department relation. Your task was to build this database using this specification.
+	The second part of the task was to evaluate your understanding of how cartesian product works. Since student_id and dept_id are two independent columns residing in two separate relations, to display them simultaneously you’d have to perform a cartesian product between the relations Student and Department and specify columns student_id and dept_id in the select statement. So, the query for this task was:
+SELECT student_id, dept_id FROM student, department;
+Note: Notice how this query concatenates each tuple in the student relation with each tuple in the department relation.
+
+
+
+Task 2
+
+Pretty similar to task 1, however, the schema diagram is a bit different. The main caveat in this case is the Course relation, where there is a composite primary key (course_id and department) and two foreign keys (department and taught_by), referencing dept_name column of Department relation and i_id column of Instructor relation respectively.
+Note: Remember that a relation can only have a single primary key. The primary key may or may not be composite. However, a relation can have multiple foreign keys. A foreign key will always have to be the same data type as the primary key it is referencing.
+
+
+
+Task 3
+
+The first part of this task entailed dropping the hometown column of the Employee relation. Pretty straightforward.
+Second part entailed adding a building column in the department relation, preferably with datatype varchar2. Also, straightforward.
+Third part was a bit tricky. To complete this part of the task, you’d have to follow a sequence of operations.
+-Drop the primary key constraint binding the course_id and Department column of the course relation.
+-Drop the course_id column from the Course relation.
+-Add a new primary key constraint on the Course relation.
+Needless to say, all of these can be done using the ALTER TABLE command we learnt in our lab. Since a lot of you had trouble getting how to add a constraint using the ALTER TABLE command, here’s a treat:
+ALTER TABLE course
+ADD CONSTRAINT course_pk_new PRIMARY KEY (name, department);
+You can also use just the name column as the new primary key, however, name and department as a composite key is a safer choice.

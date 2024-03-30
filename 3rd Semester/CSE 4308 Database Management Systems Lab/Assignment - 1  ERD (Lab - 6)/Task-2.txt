@@ -1,0 +1,43 @@
+CREATE TABLE Employee 
+(
+   Emp_ID INT,
+   Name Varchar(30),
+   Age INT,
+   Phone_No Varchar(11),
+   PRIMARY KEY (Emp_ID)
+);
+
+CREATE TABLE Customer 
+(
+   Cust_ID INT,
+   Name Varchar(30),
+   Age INT,
+   PRIMARY KEY (Cust_ID)
+);
+
+CREATE TABLE Product 
+(
+   Product_ID INT,
+   Name Varchar(30),
+   Price INT,
+   PRIMARY KEY (Product_ID)
+);
+
+CREATE TABLE Employee_Serve_Custormer
+(
+	Emp_ID INT,
+	Cust_ID INT,
+	Purchase_Date_Time datetime,
+	Primary Key(Cust_ID, Purchase_Date_Time),
+	Foreign Key(Emp_ID) References Employee,
+	Foreign Key(Cust_ID) References Customer
+);
+
+CREATE TABLE Customer_Buy_Product
+(
+	Cust_ID INT,
+	Product_ID INT,
+	Foreign Key(Cust_ID) References Customer,
+	Foreign Key (Product_ID) References Product
+);
+

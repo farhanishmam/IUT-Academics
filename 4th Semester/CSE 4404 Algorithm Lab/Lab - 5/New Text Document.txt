@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int partition(int arr[], int start, int end)
+{
+    int pivot = arr[start];
+
+    while (1) {
+
+        while(arr[start]<pivot)
+            start++;
+
+        while(arr[end]>pivot)
+            end--;
+
+        if (start >= end)
+            return end;
+
+        swap(arr[start], arr[end]);
+    }
+}
+
+int partition_rand(int arr[], int start, int end)
+{
+    srand(time(NULL));
+    int random = start + rand() % (end - start);
+
+    swap(arr[random], arr[start]);
+
+    return partition(arr, start, end);
+}
+
+void quickSort(int arr[], int start, int end)
+{
+    if (start < end) {
+
+        int pi = partition_rand(arr, start, end);
+        quickSort(arr, start, pi);
+        quickSort(arr, pi + 1, end);
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int arr[1001];
+
+    for(int i=0;i<n;i++)
+    {
+        cin>>arr[i];
+    }
+    quickSort(arr,0,n-1);
+
+    for(int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+
+}
