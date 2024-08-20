@@ -1,6 +1,6 @@
 # IUT-Academics
 
-Contains academemic resources from all 8 semesters
+Contains academic resources from the last 7 semesters
 
 Year: 2019-2023
 
